@@ -1,7 +1,7 @@
 /* Device setup */
 #include "Adafruit_TLC59711.h"
 #include <SPI.h>
-#define NUM 1 // Define the number of boards chained
+#define NUM 2 // Define the number of boards chained
 #define clock 2
 #define data 3
 Adafruit_TLC59711 tlc = Adafruit_TLC59711(NUM, clock, data);
@@ -43,7 +43,7 @@ unsigned long flickerDIter = 0;
 unsigned long flickerDDelay = 10;
 
 /*************************************************** 
-* Steady LEDs can be defined in the setup function
+* Steady LEDs are be defined in the setup function
 * 
 *   steady(channel, level);
 *   
@@ -54,29 +54,61 @@ unsigned long flickerDDelay = 10;
 void setup() {
   tlc.begin();
 
-  /* 1 - Olivander's - Under stairs */
-  steady(1, 32);
+  /* QQS - Second floor chest */
+  steady(0, 24);
 
-  /* 3 - Olivander's - Overheads */
-  steady(3, 28);
+  /* QQS - Ground floor ceiling */
+  steady(1, 64);
   
-  /* 4 - Scribulus - Overheads */
-  steady(4, 52);
+  /* QQS - Alcove */
+  steady(2, 42);
+
+  /* QQS - Minifig in window display */  
+  steady(3, 48);
+
+  /* QQS - Second floor ceiling */
+  steady(4, 64);
   
-  /* 5 - Scribulus - Desk lamp */
-  steady(5, 32);
+  /* QQS -  External lamp */  
+  steady(5, 64);
   
-  /* 6 - Olivander's - Desk lamp */
-  steady(6, 20);
+  /* Daily Prophet - Camera flash */
+  steady(6, 6);
+
+  /* Daily Prophet - Inside */
+  steady(7, 45);
+
+  /* Daily Prophet - Alcove */
+  steady(8, 24);
   
-  /* 8 - Olivander's - Window lanterns */
-  steady(8, 100);
+  /* QQS - Window displays */
+  steady(9, 18);
+
+  /* ---- */
+
+  /* Olivander's - Under stairs */
+  steady(13, 42);
+
+  /* Olivander's - Overheads */
+  steady(15, 28);
   
-  /* 9 - Scribulus - Window display */
-  steady(9, 52);
+  /* Scribulus - Overheads */
+  steady(16, 52);
   
-  /* 10 - Scribulus - Bottle */
-  steady(10, 2);
+  /* Scribulus - Desk lamp */
+  steady(17, 32);
+  
+  /* Olivander's - Desk lamp */
+  steady(18, 20);
+  
+  /* Olivander's - Window lanterns */
+  steady(20, 100);
+  
+  /* Scribulus - Window display */
+  steady(21, 52);
+  
+  /* Scribulus - Bottle */
+  steady(22, 4);
   
   tlc.write();
 }
@@ -90,30 +122,30 @@ void loop() {
   *   
   *     Channnel is the LED channel number
   *     Level is a integer between 1-128, sets brightness
-  *     (Optional) Range. An integer less than Level. Sets the intensity of the flickering. Smaller number is a more subtle flicker. Larger number is more noticeable. Default = 16
+  *     (Optional) Range. An integer less than Level. Sets the intensity of the flickering. Default = 16
   *     (Optional) DelayMin. Default = 20. 
   *     (Optional) DelayMax. Default = 100.
   * 
   ****************************************************/
-  /* 0 - Olivander's - Ground floor candle */
+  /* Olivander's - Ground floor candle */
   if (Millis - flickerAIter > flickerADelay) {
     flickerAIter = Millis;
-    flickerADelay = flicker(0, 22, 8);
+    flickerADelay = flicker(12, 22, 8);
   }
-  /* 2 - Scribulus - Street lamp and fireplace 1 */
+  /* Scribulus - Street lamp and fireplace 1 */
   if (Millis - flickerBIter > flickerBDelay) {
     flickerBIter = Millis;
-    flickerBDelay = flicker(2, 64, 8);
+    flickerBDelay = flicker(14, 64, 8);
   }
-    /* 7 - Olivander's - Upper floor candle */
+  /* Olivander's - Upper floor candle */
   if (Millis - flickerCIter > flickerCDelay) {
     flickerCIter = Millis;
-    flickerCDelay = flicker(7, 26, 8);
+    flickerCDelay = flicker(19, 26, 8);
   }
-  /* 11 - Scribulus - Fireplace 2 */
+  /* Scribulus - Fireplace 2 */
   if (Millis - flickerDIter > flickerDDelay) {
     flickerDIter = Millis;
-    flickerDDelay = flicker(11, 96);
+    flickerDDelay = flicker(23, 96);
   }
   
 } /* End the loop */
