@@ -1,7 +1,7 @@
 /* Device setup */
 #include "Adafruit_TLC59711.h"
 #include <SPI.h>
-#define NUM 2 // Define the number of boards chained
+#define NUM 4 // Define the number of boards chained
 #define clock 2
 #define data 3
 Adafruit_TLC59711 tlc = Adafruit_TLC59711(NUM, clock, data);
@@ -43,7 +43,7 @@ unsigned long flickerDIter = 0;
 unsigned long flickerDDelay = 10;
 
 /*************************************************** 
-* Steady LEDs are be defined in the setup function
+* Steady LEDs are defined in the setup function
 * 
 *   steady(channel, level);
 *   
@@ -54,61 +54,69 @@ unsigned long flickerDDelay = 10;
 void setup() {
   tlc.begin();
 
-  /* QQS - Second floor chest */
-  steady(0, 24);
-
-  /* QQS - Ground floor ceiling */
-  steady(1, 64);
-  
-  /* QQS - Alcove */
-  steady(2, 42);
-
-  /* QQS - Minifig in window display */  
-  steady(3, 48);
-
-  /* QQS - Second floor ceiling */
-  steady(4, 64);
-  
-  /* QQS -  External lamp */  
-  steady(5, 64);
-  
-  /* Daily Prophet - Camera flash */
-  steady(6, 6);
-
-  /* Daily Prophet - Inside */
-  steady(7, 45);
-
-  /* Daily Prophet - Alcove */
-  steady(8, 24);
-  
-  /* QQS - Window displays */
-  steady(9, 18);
-
-  /* ---- */
-
+  /* -- Olivander's and Scribulus: 0-11 -- */
   /* Olivander's - Under stairs */
-  steady(13, 42);
-
+  steady(1, 42);
   /* Olivander's - Overheads */
-  steady(15, 28);
-  
+  steady(3, 28);
   /* Scribulus - Overheads */
-  steady(16, 52);
-  
+  steady(4, 52);
   /* Scribulus - Desk lamp */
-  steady(17, 32);
-  
+  steady(5, 32);
   /* Olivander's - Desk lamp */
-  steady(18, 20);
-  
+  steady(6, 20);
   /* Olivander's - Window lanterns */
-  steady(20, 100);
-  
+  steady(8, 100);
   /* Scribulus - Window display */
-  steady(21, 52);
-  
+  steady(9, 52);
   /* Scribulus - Bottle */
-  steady(22, 4);
+  steady(10, 4);
+
+  /* -- QQS and Daily Prophet: 12-23 -- */
+  /* QQS - Second floor chest */
+  steady(12, 24);
+  /* QQS - Ground floor ceiling */
+  steady(13, 64);
+  /* QQS - Alcove */
+  steady(14, 42);
+  /* QQS - Minifig in window display */  
+  steady(15, 48);
+  /* QQS - Second floor ceiling */
+  steady(16, 64);
+  /* QQS -  External lamp */  
+  steady(17, 64);
+  /* Daily Prophet - Camera flash */
+  steady(18, 6);
+  /* Daily Prophet - Inside */
+  steady(19, 45);
+  /* Daily Prophet - Alcove */
+  steady(20, 24);
+  /* QQS - Window displays */
+  steady(21, 18);
+
+  /* -- FFIC and Flourish and Blots: 24-35 -- */
+  /* Flourish and Blots - Second floor ceiling */
+  steady(24, 16);
+  /* Flourish and Blots - Second floor window lamp */
+  steady(25, 32);
+  /* Flourish and Blots - Ground floor ceiling */
+  steady(26, 16);
+  /* Flourish and Blots - Alcove */
+  steady(27, 64);
+  /* Flourish and Blots - Window display */
+  steady(28, 52);
+
+  /* FFIC - Wall display */
+  steady(30, 56);
+  /* FFIC - Alcove */
+  steady(31, 72);
+  /* FFIC - Ground floor ceiling */
+  steady(32, 38);
+  /* FFIC - Second floor lamp */
+  steady(33, 12);
+  /* FFIC - External lamp */
+  steady(34, 64);
+
   
   tlc.write();
 }
@@ -130,22 +138,22 @@ void loop() {
   /* Olivander's - Ground floor candle */
   if (Millis - flickerAIter > flickerADelay) {
     flickerAIter = Millis;
-    flickerADelay = flicker(12, 22, 8);
+    flickerADelay = flicker(0, 22, 8);
   }
   /* Scribulus - Street lamp and fireplace 1 */
   if (Millis - flickerBIter > flickerBDelay) {
     flickerBIter = Millis;
-    flickerBDelay = flicker(14, 64, 8);
+    flickerBDelay = flicker(2, 64, 8);
   }
   /* Olivander's - Upper floor candle */
   if (Millis - flickerCIter > flickerCDelay) {
     flickerCIter = Millis;
-    flickerCDelay = flicker(19, 26, 8);
+    flickerCDelay = flicker(7, 26, 8);
   }
   /* Scribulus - Fireplace 2 */
   if (Millis - flickerDIter > flickerDDelay) {
     flickerDIter = Millis;
-    flickerDDelay = flicker(23, 96);
+    flickerDDelay = flicker(11, 96);
   }
   
 } /* End the loop */
