@@ -2,8 +2,8 @@
 #include "Adafruit_TLC59711.h"
 #include <SPI.h>
 #define NUM 4 // Define the number of boards chained
-#define clock 2
-#define data 3
+#define clock 4
+#define data 5
 Adafruit_TLC59711 tlc = Adafruit_TLC59711(NUM, clock, data);
 
 /* The steady function */
@@ -41,6 +41,8 @@ unsigned long flickerCIter = 0;
 unsigned long flickerCDelay = 10;
 unsigned long flickerDIter = 0;
 unsigned long flickerDDelay = 10;
+unsigned long flickerEIter = 0;
+unsigned long flickerEDelay = 10;
 
 /*************************************************** 
 * Steady LEDs are defined in the setup function
@@ -117,8 +119,35 @@ void setup() {
   /* FFIC - External lamp */
   steady(34, 64);
 
-  
+  /* -- Weasley's Wizard Wheezes: 36-47 -- */
+  /* WWW - Ground floor shelves */
+  steady(36, 12);
+  /* WWW - Ground floor ceiling */
+  steady(37, 96);
+  /* WWW - Second floor ceiling */
+  steady(38, 96);
+  /* WWW - External lamp */
+  steady(39, 64);
+  /* WWW - Third Floor ceiling */
+  steady(40, 72);
+  /* WWW - Knockturn Alley archway */
+  steady(42, 24);
+  /* WWW - Corner windows */
+  steady(43, 96);
+  /* WWW - Alcove */
+  steady(44, 12);
+  /* WWW - Display cabinet */
+  steady(45, 8);
+
   tlc.write();
+
+  /* WWW - Hat tipping motor */
+  pinMode(2, OUTPUT);
+  pinMode(3, OUTPUT);
+  /* PWM value of 32 gives it a slow continual clockwise rotation */
+  digitalWrite(2, HIGH);
+  analogWrite(3, 32);
+
 }
 
 void loop() {
@@ -154,6 +183,11 @@ void loop() {
   if (Millis - flickerDIter > flickerDDelay) {
     flickerDIter = Millis;
     flickerDDelay = flicker(11, 96);
+  }
+  /* WWW - Blue crystal */
+  if (Millis - flickerEIter > flickerEDelay) {
+    flickerEIter = Millis;
+    flickerEDelay = flicker(41, 64, 4, 20);
   }
   
 } /* End the loop */
